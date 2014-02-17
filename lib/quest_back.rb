@@ -7,7 +7,7 @@ module QuestBack
   extend ActiveSupport::Autoload
 
   autoload :Configuration
-  autoload :Client
+  autoload :Api
 
 
   # Public: Default configuration is read from here.

@@ -1,4 +1,4 @@
 module QuestBack
-  class Client
+  class Api
   end
 end
