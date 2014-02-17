@@ -6,4 +6,5 @@ module QuestBack
   extend ActiveSupport::Autoload
 
   autoload :Configuration
+  autoload :Client
 end
