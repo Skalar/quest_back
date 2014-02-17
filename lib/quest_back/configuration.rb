@@ -1,9 +1,10 @@
 module QuestBack
   class Configuration
     API_DEFAULTS = {
+      wsdl_url: 'https://integration.questback.com/integration.svc?wsdl'
     }
 
-    attr_accessor :username, :password
+    attr_accessor :wsdl_url, :username, :password
 
     def initialize(attributes = {})
       assign API_DEFAULTS
