@@ -1,5 +1,9 @@
 require "quest_back/version"
 
+require "active_support/all"
+
 module QuestBack
-  # Your code goes here...
+  extend ActiveSupport::Autoload
+
+  autoload :Configuration
 end
