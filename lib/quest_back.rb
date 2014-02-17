@@ -2,6 +2,8 @@ require "quest_back/version"
 
 require "pathname"
 require "active_support/all"
+require "savon"
+
 
 module QuestBack
   extend ActiveSupport::Autoload
