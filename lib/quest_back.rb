@@ -7,6 +7,7 @@ module QuestBack
   extend ActiveSupport::Autoload
 
   autoload :Configuration
+  autoload :Error
   autoload :Api
 
 
