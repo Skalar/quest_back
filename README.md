@@ -23,7 +23,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Get access - test client in console
+
+1. Go to https://response.questback.com/soapdocs/integration/ and request white listing of the IP you will make requests from.
+2. Sign in to QuestBack. Go to your account's page and fill in "Integration username and password".
+   If you have no fields under Integration Information you have to contact QuestBack to get access.
+3. Copy config.example.yml to config.yml and insert your username and password.
+4. `QuestBack.conf!` to load config.yml as default config.
+5. `QuestBack::Client.new.test_connection` to make a test connection API call. On successful connection this returns string with current namespace of integration library.
+
+
+
 
 ## Contributing
 
