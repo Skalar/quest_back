@@ -15,4 +15,11 @@ describe QuestBack::Api, type: :request do
       expect(subject.client).to be_a Savon::Client
     end
   end
+
+
+  describe "operations" do
+    describe "#test_connection" do
+      # TODO
+    end
+  end
 end
