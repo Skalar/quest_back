@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <TestConnectionResponse xmlns="https://integration.questback.com/2011/03">
+      <TestConnectionResult>Connection sucessful. you are connected to namespace: https://integration.questback.com/2011/03</TestConnectionResult>
+    </TestConnectionResponse>
+  </s:Body>
+</s:Envelope>

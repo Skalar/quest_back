@@ -30,8 +30,17 @@ describe QuestBack::Api, type: :request do
 
   describe "operations" do
     describe "#test_connection" do
-      it "responds to it" do
-        expect(subject).to respond_to :test_connection
+      it "calls with correct message" do
+        expected_message = {
+          user_info: {
+            'Username' => 'my-username',
+            'Password' => 'my-password'
+          }
+        }
+
+        savon.expects(:test_connection).with(message: expected_message).returns(read_fixture 'test_connection.xml')
+        response = subject.test_connection
+        expect(response).to be_successful
       end
     end
   end
