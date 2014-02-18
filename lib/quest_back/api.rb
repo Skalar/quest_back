@@ -23,7 +23,12 @@ module QuestBack
     # Savon client all API method calls will go through.
     def client
       @client ||= begin
-        client_config = {wsdl: config.wsdl_url}
+        client_config = {
+          wsdl: config.wsdl_url,
+          namespace: config.soap_namespace,
+          log_level: config.log_level
+        }
+
         client_config[:proxy] = config.http_proxy if config.http_proxy.present?
 
         Savon::Client.new client_config
