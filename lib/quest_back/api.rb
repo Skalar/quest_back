@@ -28,7 +28,7 @@ module QuestBack
     def client
       @client ||= begin
         client_config = {
-          wsdl: config.wsdl_url,
+          wsdl: config.wsdl,
           namespace: config.soap_namespace,
           log_level: config.log_level,
           element_form_default: :qualified

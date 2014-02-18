@@ -1,12 +1,12 @@
 module QuestBack
   class Configuration
     API_DEFAULTS = {
-      wsdl_url: 'https://integration.questback.com/integration.svc?wsdl',
+      wsdl: 'https://integration.questback.com/integration.svc?wsdl',
       soap_namespace: 'https://integration.questback.com/2011/03',
       log_level: :debug
     }
 
-    attr_accessor :http_proxy, :wsdl_url, :soap_namespace, :log_level, :username, :password
+    attr_accessor :http_proxy, :wsdl, :soap_namespace, :log_level, :username, :password
 
     def initialize(attributes = {})
       assign API_DEFAULTS
