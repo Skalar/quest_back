@@ -1,2 +1,3 @@
 username: 'my-username'
 password: 'my-password'
+http_proxy: ~
