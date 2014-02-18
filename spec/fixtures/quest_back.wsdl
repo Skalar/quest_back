@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:i0="https://integration.questback.com/2011/03" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="QuestBackService" targetNamespace="http://tempuri.org/">
+   <wsp:Policy wsu:Id="BasicHttpBinding_QuestBackIntegrationLibrary_policy">
+      <wsp:ExactlyOne>
+         <wsp:All>
+            <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+               <wsp:Policy>
+                  <sp:TransportToken>
+                     <wsp:Policy>
+                        <sp:HttpsToken RequireClientCertificate="false" />
+                     </wsp:Policy>
+                  </sp:TransportToken>
+                  <sp:AlgorithmSuite>
+                     <wsp:Policy>
+                        <sp:Basic256 />
+                     </wsp:Policy>
+                  </sp:AlgorithmSuite>
+                  <sp:Layout>
+                     <wsp:Policy>
+                        <sp:Strict />
+                     </wsp:Policy>
+                  </sp:Layout>
+               </wsp:Policy>
+            </sp:TransportBinding>
+         </wsp:All>
+      </wsp:ExactlyOne>
+   </wsp:Policy>
+   <wsdl:import namespace="https://integration.questback.com/2011/03" location="https://integration.questback.com/Integration.svc?wsdl=wsdl0" />
+   <wsdl:types />
+   <wsdl:binding name="BasicHttpBinding_QuestBackIntegrationLibrary" type="i0:QuestBackIntegrationLibrary">
+      <wsp:PolicyReference URI="#BasicHttpBinding_QuestBackIntegrationLibrary_policy" />
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+      <wsdl:operation name="GetQuests">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetQuests" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+         <wsdl:fault name="QuestBackServiceFaultFault">
+            <soap:fault name="QuestBackServiceFaultFault" use="literal" />
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="GetQuestQuestions">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetQuestQuestions" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddEmailInvitees">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/AddEmailInvitees" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddRespondentsData">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/AddRespondentsData" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddRespondentsDataWithoutEmailInvitation">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/AddRespondentsDataWithoutEmailInvitation" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="AddRespondentsDataWithSmsInvitation">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/AddRespondentsDataWithSmsInvitation" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetInvitationResponseCounts">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetInvitationResponseCounts" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetInviteesInfo">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetInviteesInfo" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAnswers">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetAnswers" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetResponses">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetResponses" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetRespondentsData">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetRespondentsData" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetLanguageList">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/GetLanguageList" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+         <wsdl:fault name="QuestBackServiceFaultFault">
+            <soap:fault name="QuestBackServiceFaultFault" use="literal" />
+         </wsdl:fault>
+      </wsdl:operation>
+      <wsdl:operation name="TestConnection">
+         <soap:operation soapAction="https://integration.questback.com/2011/03/QuestBackIntegrationLibrary/TestConnection" style="document" />
+         <wsdl:input>
+            <soap:body use="literal" />
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" />
+         </wsdl:output>
+         <wsdl:fault name="QuestBackServiceFaultFault">
+            <soap:fault name="QuestBackServiceFaultFault" use="literal" />
+         </wsdl:fault>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="QuestBackService">
+      <wsdl:port name="BasicHttpBinding_QuestBackIntegrationLibrary" binding="tns:BasicHttpBinding_QuestBackIntegrationLibrary">
+         <soap:address location="https://integration.questback.com/Integration.svc" />
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

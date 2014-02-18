@@ -3,6 +3,7 @@ require 'spec_helper'
 describe QuestBack::Api, type: :request do
   let(:config) do
     QuestBack::Configuration.new(
+      wsdl_url: path_to_fixture('quest_back.wsdl'),
       username: 'my-username',
       password: 'my-password'
     )
