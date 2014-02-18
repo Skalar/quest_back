@@ -29,7 +29,9 @@ describe QuestBack::Api, type: :request do
 
   describe "operations" do
     describe "#test_connection" do
-      # TODO
+      it "responds to it" do
+        expect(subject).to respond_to :test_connection
+      end
     end
   end
 end

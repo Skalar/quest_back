@@ -17,6 +17,10 @@ module QuestBack
       @config = attributes[:config]
     end
 
+    def test_connection
+      client.call :test_connection, build_hash_for_savon_call
+    end
+
 
     # Public: Savon client.
     #
@@ -26,7 +30,8 @@ module QuestBack
         client_config = {
           wsdl: config.wsdl_url,
           namespace: config.soap_namespace,
-          log_level: config.log_level
+          log_level: config.log_level,
+          convert_request_keys_to: :camelcase
         }
 
         client_config[:proxy] = config.http_proxy if config.http_proxy.present?
@@ -41,6 +46,23 @@ module QuestBack
     # Returns a QuestBack::Configuration object
     def config
       @config || QuestBack.default_configuration || fail(QuestBack::Error, 'No configuration given or found on QuestBack.default_configuration.')
+    end
+
+
+    # Public: Deep merges default attributes to send with the SOAP request.
+    #
+    # Returns a merged hash for Savon client
+    def build_hash_for_savon_call(attributes = {})
+      defaults = {
+        user_info: {
+          username: config.username,
+          password: config.password
+        }
+      }
+
+      {
+        message: defaults.deep_merge(attributes)
+      }
     end
   end
 end
