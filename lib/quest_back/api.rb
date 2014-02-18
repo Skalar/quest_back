@@ -1,11 +1,5 @@
 module QuestBack
   class Api
-    # SOAP Operations we'll expose
-    OPERATIONS = %w[
-      test_connection
-    ]
-
-
     # Public: Creates a new API gateway object.
     #
     # Attributes
