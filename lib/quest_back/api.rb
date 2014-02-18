@@ -31,7 +31,7 @@ module QuestBack
           wsdl: config.wsdl_url,
           namespace: config.soap_namespace,
           log_level: config.log_level,
-          convert_request_keys_to: :camelcase
+          element_form_default: :qualified
         }
 
         client_config[:proxy] = config.http_proxy if config.http_proxy.present?
@@ -55,8 +55,8 @@ module QuestBack
     def build_hash_for_savon_call(attributes = {})
       defaults = {
         user_info: {
-          username: config.username,
-          password: config.password
+          'Username' => config.username,
+          'Password' => config.password
         }
       }
 
