@@ -66,6 +66,17 @@ describe QuestBack::Api, type: :request do
         response = subject.get_quests
         expect(response).to be_successful
       end
+
+      it "is possible to override default paging info" do
+        expected_message = expected_default_message.merge(
+          paging_info: {'PageNo' => 0, 'PageSize' => 1},
+          quest_filter: ''
+        )
+
+        savon.expects(:get_quests).with(message: expected_message).returns success_fixture_for 'get_quests'
+        response = subject.get_quests paging_info: {page_size: 1}
+        expect(response).to be_successful
+      end
     end
 
   end

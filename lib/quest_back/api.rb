@@ -23,9 +23,7 @@ module QuestBack
     end
 
     def get_quests(attributes = {})
-      attributes = DEFAULTS.slice(:paging_info, :quest_filter).merge(attributes)
-
-      client.call :get_quests, build_hash_for_savon_call(attributes)
+      client.call :get_quests, build_hash_for_savon_call(attributes, include_defaults: [:paging_info, :quest_filter])
     end
 
 
@@ -61,12 +59,21 @@ module QuestBack
     private
 
 
-    # Private: Deep merges default attributes to send with the SOAP request.
+    # Private: Builds a hash for savon call - include user info and other defaults you ask it to
+    #
+    # attributes    -   A hash representing attributes the client sent to us which it expects us to send to QuestBack
+    # options       -   A hash where we can send in options:
+    #                     :include_defaults   -   Give an array with key names to slice from DEFAULTS and mix in with
+    #                                             the rest of the attributes.
     #
     # Returns a merged hash for Savon client
-    def build_hash_for_savon_call(attributes = {})
-      defaults = {user_info: {username: config.username, password: config.password}}
-      message = defaults.merge attributes
+    def build_hash_for_savon_call(attributes = {}, options = {})
+      user_info = {user_info: {username: config.username, password: config.password}}
+      message = user_info.merge attributes
+
+      if options[:include_defaults]
+        message = DEFAULTS.slice(*Array.wrap(options[:include_defaults])).deep_merge message
+      end
 
       {
         message: transform_hash_for_quest_back(message)
