@@ -85,7 +85,14 @@ module QuestBack
       Hash[
         hash.map do |key, value|
           key = transform_keys ? key.to_s.camelcase : key
-          value = value.is_a?(Hash) ? transform_hash_for_quest_back(value, true) : value
+          value = case value
+          when Hash
+            transform_hash_for_quest_back value, true
+          when Array
+            value.all? { |v| v.is_a? String } ? {string: value} : value
+          else
+            value
+          end
 
           [key, value]
         end
