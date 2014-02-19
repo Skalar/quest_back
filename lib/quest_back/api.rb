@@ -22,13 +22,22 @@ module QuestBack
 
 
 
+
+
+
+
     def test_connection
-      client.call :test_connection, build_hash_for_savon_call
+      call :test_connection
     end
 
     def get_quests(attributes = {})
-      client.call :get_quests, build_hash_for_savon_call(attributes, operation_name: :get_quests, include_defaults: [:paging_info, :quest_filter])
+      call :get_quests, attributes, include_defaults: [:paging_info, :quest_filter]
     end
+
+
+
+
+
 
 
     # Public: Savon client.
@@ -61,6 +70,13 @@ module QuestBack
 
 
     private
+
+    def call(operation_name, attributes = {}, options = {})
+      options[:operation_name] = operation_name
+      savon_response = client.call operation_name, build_hash_for_savon_call(attributes, options)
+
+      Response.new savon_response, operation_name
+    end
 
 
     # Private: Builds a hash for savon call - include user info and other defaults you ask it to

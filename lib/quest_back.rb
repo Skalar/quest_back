@@ -10,6 +10,7 @@ module QuestBack
 
   autoload :Configuration
   autoload :Error
+  autoload :Response
   autoload :Api
 
 
