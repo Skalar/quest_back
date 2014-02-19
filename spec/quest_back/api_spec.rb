@@ -59,7 +59,8 @@ describe QuestBack::Api, type: :request do
       it "returns quests" do
         expected_message = expected_default_message.merge(
           paging_info: {'PageNo' => 0, 'PageSize' => 50},
-          quest_filter: ''
+          quest_filter: '',
+          order!: QuestBack::Api::ORDER[:get_quests]
         )
 
         savon.expects(:get_quests).with(message: expected_message).returns success_fixture_for 'get_quests'
@@ -70,7 +71,8 @@ describe QuestBack::Api, type: :request do
       it "is possible to override default paging info" do
         expected_message = expected_default_message.merge(
           paging_info: {'PageNo' => 0, 'PageSize' => 1},
-          quest_filter: ''
+          quest_filter: '',
+          order!: QuestBack::Api::ORDER[:get_quests]
         )
 
         savon.expects(:get_quests).with(message: expected_message).returns success_fixture_for 'get_quests'
@@ -78,6 +80,5 @@ describe QuestBack::Api, type: :request do
         expect(response).to be_successful
       end
     end
-
   end
 end

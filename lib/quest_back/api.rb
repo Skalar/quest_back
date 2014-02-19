@@ -5,6 +5,10 @@ module QuestBack
       quest_filter: ''
     }
 
+    ORDER = {
+      get_quests: [:user_info, :paging_info, :quest_filter]
+    }
+
     # Public: Creates a new API gateway object.
     #
     # Attributes
@@ -23,7 +27,7 @@ module QuestBack
     end
 
     def get_quests(attributes = {})
-      client.call :get_quests, build_hash_for_savon_call(attributes, include_defaults: [:paging_info, :quest_filter])
+      client.call :get_quests, build_hash_for_savon_call(attributes, operation_name: :get_quests, include_defaults: [:paging_info, :quest_filter])
     end
 
 
@@ -71,8 +75,14 @@ module QuestBack
       user_info = {user_info: {username: config.username, password: config.password}}
       message = user_info.merge attributes
 
-      if options[:include_defaults]
-        message = DEFAULTS.slice(*Array.wrap(options[:include_defaults])).deep_merge message
+      if default_keys = options[:include_defaults]
+        message = DEFAULTS.slice(*Array.wrap(default_keys)).deep_merge message
+      end
+
+      if operation_name = options[:operation_name]
+        if order = ORDER[operation_name]
+          message[:order!] = order
+        end
       end
 
       {
