@@ -9,6 +9,15 @@ describe QuestBack::Api, type: :request do
     )
   end
 
+  let(:expected_default_message) do
+    {
+      user_info: {
+        'Username' => 'my-username',
+        'Password' => 'my-password'
+      }
+    }
+  end
+
   subject { described_class.new config: config }
 
   describe "#client" do
@@ -32,14 +41,7 @@ describe QuestBack::Api, type: :request do
     describe "#test_connection" do
       context "success" do
         it "calls with correct message and response is successful" do
-          expected_message = {
-            user_info: {
-              'Username' => 'my-username',
-              'Password' => 'my-password'
-            }
-          }
-
-          savon.expects(:test_connection).with(message: expected_message).returns(success_fixture_for 'test_connection')
+          savon.expects(:test_connection).with(message: expected_default_message).returns success_fixture_for 'test_connection'
           response = subject.test_connection
           expect(response).to be_successful
         end
@@ -47,10 +49,24 @@ describe QuestBack::Api, type: :request do
 
       context "failure" do
         it "raises error" do
-          savon.expects(:test_connection).with(message: :any).returns(failure_fixture_for 'test_connection')
+          savon.expects(:test_connection).with(message: :any).returns failure_fixture_for 'test_connection'
           expect { subject.test_connection }.to raise_error Savon::SOAPFault
         end
       end
     end
+
+    describe "#get_quests" do
+      it "returns quests" do
+        expected_message = expected_default_message.merge(
+          paging_info: {'PageNo' => 0, 'PageSize' => 50},
+          quest_filter: ''
+        )
+
+        savon.expects(:get_quests).with(message: expected_message).returns success_fixture_for 'get_quests'
+        response = subject.get_quests
+        expect(response).to be_successful
+      end
+    end
+
   end
 end

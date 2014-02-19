@@ -1,5 +1,10 @@
 module QuestBack
   class Api
+    DEFAULTS = {
+      paging_info: {page_no: 0, page_size: 50},
+      quest_filter: ''
+    }
+
     # Public: Creates a new API gateway object.
     #
     # Attributes
@@ -15,6 +20,12 @@ module QuestBack
 
     def test_connection
       client.call :test_connection, build_hash_for_savon_call
+    end
+
+    def get_quests(attributes = {})
+      attributes = DEFAULTS.slice(:paging_info, :quest_filter).merge(attributes)
+
+      client.call :get_quests, build_hash_for_savon_call(attributes)
     end
 
 
