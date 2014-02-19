@@ -5,12 +5,20 @@ require "savon/mock/spec_helper"
 
 
 module RequestHelpers
-  def path_to_fixture(filename)
-    File.join(File.dirname(__FILE__), 'fixtures', filename)
+  def success_fixture_for(name)
+    read_fixture "#{name}_success.xml"
+  end
+
+  def failure_fixture_for(name)
+    read_fixture "#{name}_failure.xml"
   end
 
   def read_fixture(filename)
     File.read path_to_fixture(filename)
+  end
+
+  def path_to_fixture(filename)
+    File.join(File.dirname(__FILE__), 'fixtures', filename)
   end
 end
 

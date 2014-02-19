@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <s:Fault>
+      <faultcode>s:Client</faultcode>
+      <faultstring xml:lang="nb-NO">Invalid username or password.</faultstring>
+      <detail>
+        <QuestBackServiceFault xmlns="https://integration.questback.com/2011/03" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+          <Operation>Authentication</Operation>
+          <ProblemType>Invalid username or password.</ProblemType>
+        </QuestBackServiceFault>
+      </detail>
+    </s:Fault>
+  </s:Body>
+</s:Envelope>

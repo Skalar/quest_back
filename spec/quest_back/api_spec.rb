@@ -30,17 +30,26 @@ describe QuestBack::Api, type: :request do
 
   describe "operations" do
     describe "#test_connection" do
-      it "calls with correct message" do
-        expected_message = {
-          user_info: {
-            'Username' => 'my-username',
-            'Password' => 'my-password'
+      context "success" do
+        it "calls with correct message and response is successful" do
+          expected_message = {
+            user_info: {
+              'Username' => 'my-username',
+              'Password' => 'my-password'
+            }
           }
-        }
 
-        savon.expects(:test_connection).with(message: expected_message).returns(read_fixture 'test_connection.xml')
-        response = subject.test_connection
-        expect(response).to be_successful
+          savon.expects(:test_connection).with(message: expected_message).returns(success_fixture_for 'test_connection')
+          response = subject.test_connection
+          expect(response).to be_successful
+        end
+      end
+
+      context "failure" do
+        it "raises error" do
+          savon.expects(:test_connection).with(message: :any).returns(failure_fixture_for 'test_connection')
+          expect { subject.test_connection }.to raise_error Savon::SOAPFault
+        end
       end
     end
   end
