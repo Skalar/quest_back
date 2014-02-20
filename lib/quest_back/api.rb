@@ -44,10 +44,24 @@ module QuestBack
 
 
 
+    # Public: Make a test connection call to QuestBack
+    #
+    # Returns QuestBack::Response
     def test_connection
       call :test_connection
     end
 
+    # Public: Get quests
+    #
+    # attributes    -   Attributes sent to QuestBack
+    #
+    # Example
+    #
+    #   response = api.get_quests paging_info: {page_size: 2}  # Limits result to two
+    #   response.results
+    #   => [result, result]
+    #
+    # Returns QuestBack::Response
     def get_quests(attributes = {})
       call :get_quests, attributes, include_defaults: [:paging_info, :quest_filter]
     end
