@@ -9,6 +9,11 @@ module QuestBack
       get_quests: [:user_info, :paging_info, :quest_filter]
     }
 
+    RESULT_KEY_NESTINGS = {
+      test_connection: [],
+      get_quests: [:quests, :quest]
+    }
+
     # Public: Creates a new API gateway object.
     #
     # Attributes
@@ -73,9 +78,15 @@ module QuestBack
 
     def call(operation_name, attributes = {}, options = {})
       options[:operation_name] = operation_name
+
+      options_to_response = {
+        operation_name: options[:operation_name],
+        result_key_nestings: RESULT_KEY_NESTINGS[operation_name]
+      }
+
       savon_response = client.call operation_name, build_hash_for_savon_call(attributes, options)
 
-      Response.new savon_response, operation_name
+      Response.new savon_response, options_to_response
     end
 
 

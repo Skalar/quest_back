@@ -1,0 +1,50 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <GetQuestsResponse xmlns="https://integration.questback.com/2011/03">
+         <GetQuestsResult xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <Quests>
+               <Quest>
+                  <QuestId>4567668</QuestId>
+                  <SecurityLock>m0pI8orKJp</SecurityLock>
+                  <QuestTitle>Skalars spørreundersøkelse</QuestTitle>
+                  <Startdate>2014-02-18T00:00:00</Startdate>
+                  <EndDate>2017-03-01T00:00:00</EndDate>
+                  <State>Active</State>
+                  <TotalInvitationsSent>0</TotalInvitationsSent>
+                  <TotalResponseCount>0</TotalResponseCount>
+                  <LastResponseDate>0001-01-01T00:00:00</LastResponseDate>
+                  <DefaultLanguageId>2989</DefaultLanguageId>
+                  <Languages>
+                     <Language>
+                        <LanguageId>2989</LanguageId>
+                        <LanguageName>Norwegian (Bokmål)</LanguageName>
+                     </Language>
+                  </Languages>
+               </Quest>
+               <Quest>
+                  <QuestId>4568002</QuestId>
+                  <SecurityLock>rHSTt6cYut</SecurityLock>
+                  <QuestTitle>Runde to!</QuestTitle>
+                  <Startdate>2014-02-20T00:00:00</Startdate>
+                  <EndDate>2014-04-20T00:00:00</EndDate>
+                  <State>Active</State>
+                  <TotalInvitationsSent>0</TotalInvitationsSent>
+                  <TotalResponseCount>0</TotalResponseCount>
+                  <LastResponseDate>0001-01-01T00:00:00</LastResponseDate>
+                  <DefaultLanguageId>2989</DefaultLanguageId>
+                  <Languages>
+                     <Language>
+                        <LanguageId>2989</LanguageId>
+                        <LanguageName>Norwegian (Bokmål)</LanguageName>
+                     </Language>
+                  </Languages>
+               </Quest>
+            </Quests>
+            <PageInfo>
+               <PageSize>10</PageSize>
+               <TotalCount>2</TotalCount>
+            </PageInfo>
+         </GetQuestsResult>
+      </GetQuestsResponse>
+   </s:Body>
+</s:Envelope>
