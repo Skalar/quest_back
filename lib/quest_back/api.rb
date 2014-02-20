@@ -148,7 +148,7 @@ module QuestBack
       end
 
       if order = ORDER[options[:operation_name]]
-        message[:order!] = order
+        message[:order!] = order & message.keys
       end
 
       {
