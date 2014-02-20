@@ -7,6 +7,12 @@ Simply Ruby client for QuestBack's SOAP API.
 This gem is not complete and may lack many functions provided by QuestBack.
 Please feel free to contribute and make pull requests.
 
+It is also very simplistic, only using simple hashes for both sending in arguments to the API and returning responses.
+Maybe this will change in the future with real objects sent in to the API.
+
+
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -32,6 +38,37 @@ Or install it yourself as:
 4. `QuestBack.conf!` to load config.yml as default config.
 5. `QuestBack::Client.new.test_connection` to make a test connection API call. On successful connection this returns string with current namespace of integration library.
 
+
+### Example of usage
+
+```ruby
+# Read quests
+api = QuestBack::Api.new
+response = api.get_quests
+irb(main):005:0> response.results
+=> [
+    {
+      :quest_id=>"4567668",
+      :security_lock=>"m0pI8orKJp",
+      :quest_title=>"Skalars spørreundersøkelse",
+      ...
+    },
+    {
+      ...
+    }
+  ]
+
+
+# Add email invitees
+response = api.add_email_invitees(
+  quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+  emails: ['inviso@skalar.no', 'th@skalar.no'],
+  sendduplicate: true
+)
+
+response.result
+=> "Added 2 invitations to QuestId:4567668"
+```
 
 
 
