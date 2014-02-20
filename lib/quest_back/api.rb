@@ -31,6 +31,10 @@ module QuestBack
       add_email_invitees: []
     }
 
+    NAMESPACES = {
+      'xmlns:array' => 'http://schemas.microsoft.com/2003/10/Serialization/Arrays'
+    }
+
     # Public: Creates a new API gateway object.
     #
     # Attributes
@@ -78,6 +82,23 @@ module QuestBack
       call :get_language_list
     end
 
+    # Public: Invites a set of emails to a quest.
+    #
+    # attributes    -   Attributes sent to QuestBack
+    #
+    # Example
+    #
+    #   response = api.add_email_invitees(
+    #     quest_info: {
+    #       quest_id: 4567668,
+    #       security_lock: 'm0pI8orKJp'
+    #     },
+    #     emails: ['inviso@skalar.no', 'th@skalar.no'],
+    #     send_duplicate: true, # or false as default
+    #     language_id: 123, # optional
+    #   )
+    #
+    # Returns QuestBack::Response
     def add_email_invitees(attributes = {})
       call :add_email_invitees, attributes, include_defaults: [:send_duplicate]
     end
@@ -95,7 +116,8 @@ module QuestBack
           wsdl: config.wsdl,
           namespace: config.soap_namespace,
           log_level: config.log_level,
-          element_form_default: :qualified
+          element_form_default: :qualified,
+          namespaces: NAMESPACES
         }
 
         client_config[:proxy] = config.http_proxy if config.http_proxy.present?
@@ -183,7 +205,7 @@ module QuestBack
           when Hash
             transform_hash_for_quest_back value, true
           when Array
-            value.all? { |v| v.is_a? String } ? {'arr:string' => value} : value
+            value.all? { |v| v.is_a? String } ? {'array:string' => value} : value
           else
             value
           end

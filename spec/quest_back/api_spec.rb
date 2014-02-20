@@ -111,7 +111,7 @@ describe QuestBack::Api, type: :request do
       it "makes call with expected arguments" do
         expected_message = expected_default_message.merge(
           quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
-          emails: {'arr:string' => ['inviso@skalar.no', 'th@skalar.no']},
+          emails: {'array:string' => ['inviso@skalar.no', 'th@skalar.no']},
           send_duplicate: false,
           order!: QuestBack::Api::ORDER[:add_email_invitees] - [:language_id]
         )
@@ -119,9 +119,32 @@ describe QuestBack::Api, type: :request do
 
         savon.expects(:add_email_invitees).with(message: expected_message).returns success_fixture_for 'add_email_invitees'
         response = subject.add_email_invitees(
-          quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'}, emails: ['inviso@skalar.no', 'th@skalar.no'],
+          quest_info: {
+            quest_id: 4567668,
+            security_lock: 'm0pI8orKJp'
+          },
+          emails: ['inviso@skalar.no', 'th@skalar.no']
         )
         expect(response).to be_successful
+      end
+
+      it "is possible to override defaults" do
+        expected_message = expected_default_message.merge(
+          quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
+          emails: {'array:string' => ['inviso@skalar.no', 'th@skalar.no']},
+          send_duplicate: true,
+          order!: QuestBack::Api::ORDER[:add_email_invitees] - [:language_id]
+        )
+
+        savon.expects(:add_email_invitees).with(message: expected_message).returns success_fixture_for 'add_email_invitees'
+        response = subject.add_email_invitees(
+          quest_info: {
+            quest_id: 4567668,
+            security_lock: 'm0pI8orKJp'
+          },
+          emails: ['inviso@skalar.no', 'th@skalar.no'],
+          send_duplicate: true
+        )
       end
 
       it "has expected result" do
