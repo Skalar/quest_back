@@ -1,14 +1,27 @@
 module QuestBack
   class Api
+    # This hash contains parts of request we can include in soap operation.
+    # For instance call(:some_action, attributes, include_defaults: [:paging_info]) will
+    # slice paging_info and include it in the request.
     DEFAULTS = {
       paging_info: {page_no: 0, page_size: 50},
       quest_filter: ''
     }
 
+    # The order of the elements in the SOAP body is important for the SOAP API.
+    # For operations with multiple arguments this hash gives savon the order of which
+    # it should .. well, order the elements.
     ORDER = {
       get_quests: [:user_info, :paging_info, :quest_filter]
     }
 
+    # In order to provide a simple response.result and response.results interface
+    # where the actual result we care about is returned we have to give knowledge to
+    # where this result is found. As it turns out, get_quests returns it's quests within
+    # quests/quest array, and at the same time get_quest_questions returns the questions
+    # within simply it's root result element. No nestings there.. So, it seems a bit randon
+    # and we need to have this configured. I though it would be put under quest_questions/quest_question,
+    # but no such luck.
     RESULT_KEY_NESTINGS = {
       test_connection: [],
       get_quests: [:quests, :quest]
