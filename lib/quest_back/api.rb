@@ -133,10 +133,8 @@ module QuestBack
         message = DEFAULTS.slice(*Array.wrap(default_keys)).deep_merge message
       end
 
-      if operation_name = options[:operation_name]
-        if order = ORDER[operation_name]
-          message[:order!] = order
-        end
+      if order = ORDER[options[:operation_name]]
+        message[:order!] = order
       end
 
       {
