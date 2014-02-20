@@ -1,0 +1,7 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <AddEmailInviteesResponse xmlns="https://integration.questback.com/2011/03">
+         <AddEmailInviteesResult>Added 2 invitations to QuestId:4567668</AddEmailInviteesResult>
+      </AddEmailInviteesResponse>
+   </s:Body>
+</s:Envelope>

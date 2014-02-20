@@ -5,14 +5,16 @@ module QuestBack
     # slice paging_info and include it in the request.
     DEFAULTS = {
       paging_info: {page_no: 0, page_size: 50},
-      quest_filter: ''
+      quest_filter: '',
+      send_duplicate: false
     }
 
     # The order of the elements in the SOAP body is important for the SOAP API.
     # For operations with multiple arguments this hash gives savon the order of which
     # it should .. well, order the elements.
     ORDER = {
-      get_quests: [:user_info, :paging_info, :quest_filter]
+      get_quests: [:user_info, :paging_info, :quest_filter],
+      add_email_invitees: [:user_info, :quest_info, :emails, :send_duplicate, :language_id]
     }
 
     # In order to provide a simple response.result and response.results interface
@@ -25,7 +27,8 @@ module QuestBack
     RESULT_KEY_NESTINGS = {
       test_connection: [],
       get_quests: [:quests, :quest],
-      get_language_list: [:language]
+      get_language_list: [:language],
+      add_email_invitees: []
     }
 
     # Public: Creates a new API gateway object.
@@ -67,8 +70,16 @@ module QuestBack
       call :get_quests, attributes, include_defaults: [:paging_info, :quest_filter]
     end
 
+    # Public: Returns a list of languages from QuestBack.
+    #
+    #
+    # Returns QuestBack::Response
     def get_language_list
       call :get_language_list
+    end
+
+    def add_email_invitees(attributes = {})
+      call :add_email_invitees, attributes, include_defaults: [:send_duplicate]
     end
 
 
@@ -172,7 +183,7 @@ module QuestBack
           when Hash
             transform_hash_for_quest_back value, true
           when Array
-            value.all? { |v| v.is_a? String } ? {string: value} : value
+            value.all? { |v| v.is_a? String } ? {'arr:string' => value} : value
           else
             value
           end

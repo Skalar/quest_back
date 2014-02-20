@@ -106,5 +106,33 @@ describe QuestBack::Api, type: :request do
         expect(response.results.length).to eq 145
       end
     end
+
+    describe "#add_email_invitees" do
+      it "makes call with expected arguments" do
+        expected_message = expected_default_message.merge(
+          quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
+          emails: {'arr:string' => ['inviso@skalar.no', 'th@skalar.no']},
+          send_duplicate: false,
+          order!: QuestBack::Api::ORDER[:add_email_invitees] - [:language_id]
+        )
+
+
+        savon.expects(:add_email_invitees).with(message: expected_message).returns success_fixture_for 'add_email_invitees'
+        response = subject.add_email_invitees(
+          quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'}, emails: ['inviso@skalar.no', 'th@skalar.no'],
+        )
+        expect(response).to be_successful
+      end
+
+      it "has expected result" do
+        savon.expects(:add_email_invitees).with(message: :any).returns success_fixture_for 'add_email_invitees'
+        response = subject.add_email_invitees(
+          quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+          emails: ['inviso@skalar.no', 'th@skalar.no'],
+        )
+
+        expect(response.result).to eq 'Added 2 invitations to QuestId:4567668'
+      end
+    end
   end
 end
