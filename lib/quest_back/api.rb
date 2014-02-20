@@ -24,7 +24,8 @@ module QuestBack
     # but no such luck.
     RESULT_KEY_NESTINGS = {
       test_connection: [],
-      get_quests: [:quests, :quest]
+      get_quests: [:quests, :quest],
+      get_language_list: [:language]
     }
 
     # Public: Creates a new API gateway object.
@@ -66,7 +67,9 @@ module QuestBack
       call :get_quests, attributes, include_defaults: [:paging_info, :quest_filter]
     end
 
-
+    def get_language_list
+      call :get_language_list
+    end
 
 
 

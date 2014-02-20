@@ -56,7 +56,7 @@ describe QuestBack::Api, type: :request do
     end
 
     describe "#get_quests" do
-      it "returns quests" do
+      it "makes call with expected arguments" do
         expected_message = expected_default_message.merge(
           paging_info: {'PageNo' => 0, 'PageSize' => 50},
           quest_filter: '',
@@ -78,6 +78,32 @@ describe QuestBack::Api, type: :request do
         savon.expects(:get_quests).with(message: expected_message).returns success_fixture_for 'get_quests'
         response = subject.get_quests paging_info: {page_size: 1}
         expect(response).to be_successful
+      end
+
+      it "has expected results" do
+        savon.expects(:get_quests).with(message: :any).returns success_fixture_for 'get_quests'
+        response = subject.get_quests
+
+        result = response.results.first
+
+        expect(result[:quest_id]).to eq '4567668'
+        expect(result[:security_lock]).to eq 'm0pI8orKJp'
+        expect(result[:state]).to eq 'Active'
+      end
+    end
+
+    describe "#get_language_list" do
+      it "makes call with expected arguments" do
+        savon.expects(:get_language_list).with(message: expected_default_message).returns success_fixture_for 'get_language_list'
+        response = subject.get_language_list
+        expect(response).to be_successful
+      end
+
+      it "has all known languages" do
+        savon.expects(:get_language_list).with(message: :any).returns success_fixture_for 'get_language_list'
+        response = subject.get_language_list
+
+        expect(response.results.length).to eq 145
       end
     end
   end
