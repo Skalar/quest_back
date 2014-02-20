@@ -14,7 +14,8 @@ module QuestBack
     # it should .. well, order the elements.
     ORDER = {
       get_quests: [:user_info, :paging_info, :quest_filter],
-      add_email_invitees: [:user_info, :quest_info, :emails, :sendduplicate, :language_id]
+      add_email_invitees: [:user_info, :quest_info, :emails, :sendduplicate, :language_id],
+      add_respondents_data: [:user_info, :quest_info, :respondents_data, :language_id]
     }
 
     # In order to provide a simple response.result and response.results interface
@@ -28,7 +29,13 @@ module QuestBack
       test_connection: [],
       get_quests: [:quests, :quest],
       get_language_list: [:language],
-      add_email_invitees: []
+      add_email_invitees: [],
+      add_respondents_data: []
+    }
+
+    RESPONDENTS_HEADER_TYPE = {
+      numeric: 1,
+      text: 2
     }
 
     NAMESPACES = {
@@ -101,6 +108,10 @@ module QuestBack
     # Returns QuestBack::Response
     def add_email_invitees(attributes = {})
       call :add_email_invitees, attributes, include_defaults: [:sendduplicate]
+    end
+
+    def add_respondents_data(attributes = {})
+      call :add_respondents_data, attributes
     end
 
 

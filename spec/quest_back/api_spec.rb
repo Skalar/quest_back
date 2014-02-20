@@ -55,6 +55,8 @@ describe QuestBack::Api, type: :request do
       end
     end
 
+
+
     describe "#get_quests" do
       it "makes call with expected arguments" do
         expected_message = expected_default_message.merge(
@@ -92,6 +94,8 @@ describe QuestBack::Api, type: :request do
       end
     end
 
+
+
     describe "#get_language_list" do
       it "makes call with expected arguments" do
         savon.expects(:get_language_list).with(message: expected_default_message).returns success_fixture_for 'get_language_list'
@@ -106,6 +110,8 @@ describe QuestBack::Api, type: :request do
         expect(response.results.length).to eq 145
       end
     end
+
+
 
     describe "#add_email_invitees" do
       it "makes call with expected arguments" do
@@ -159,6 +165,51 @@ describe QuestBack::Api, type: :request do
         )
 
         expect(response.result).to eq 'Added 2 invitations to QuestId:4567668'
+      end
+    end
+
+
+    describe "#add_respondents_data" do
+      it "makes call with expected arguments" do
+        expected_message = expected_default_message.merge(
+          quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
+          respondents_data: {
+            'RespondentDataHeader' => {
+              'RespondentDataHeader' => [
+                {
+                  'Title' => 'Epost',
+                  'Type' => 2,
+                  'IsEmailField' => true,
+                  'IsSmsField' => false
+                },
+                {
+                  'Title' => 'Navn',
+                  'Type' => 2,
+                  'IsEmailField' => false,
+                  'IsSmsField' => false
+                },
+                {
+                  'Title' => 'Alder',
+                  'Type' => 1,
+                  'IsEmailField' => false,
+                  'IsSmsField' => false
+                }
+              ]
+            },
+            'RespondentData' => ['th@skalar.no;Thorbjorn;32'],
+            'Deliminator' => ';',
+            'AllowDuplicate' => true,
+            'AddAsInvitee' => true
+          },
+          order!: QuestBack::Api::ORDER[:add_respondents_data] - [:language_id]
+        )
+
+
+        savon.expects(:add_respondents_data).with(message: expected_message).returns success_fixture_for 'add_respondents_data'
+        response = subject.add_respondents_data(
+        )
+
+        expect(response).to be_successful
       end
     end
   end
