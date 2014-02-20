@@ -6,7 +6,7 @@ module QuestBack
     DEFAULTS = {
       paging_info: {page_no: 0, page_size: 50},
       quest_filter: '',
-      send_duplicate: false
+      sendduplicate: false
     }
 
     # The order of the elements in the SOAP body is important for the SOAP API.
@@ -14,7 +14,7 @@ module QuestBack
     # it should .. well, order the elements.
     ORDER = {
       get_quests: [:user_info, :paging_info, :quest_filter],
-      add_email_invitees: [:user_info, :quest_info, :emails, :send_duplicate, :language_id]
+      add_email_invitees: [:user_info, :quest_info, :emails, :sendduplicate, :language_id]
     }
 
     # In order to provide a simple response.result and response.results interface
@@ -94,13 +94,13 @@ module QuestBack
     #       security_lock: 'm0pI8orKJp'
     #     },
     #     emails: ['inviso@skalar.no', 'th@skalar.no'],
-    #     send_duplicate: true, # or false as default
+    #     sendduplicate: true, # or false as default
     #     language_id: 123, # optional
     #   )
     #
     # Returns QuestBack::Response
     def add_email_invitees(attributes = {})
-      call :add_email_invitees, attributes, include_defaults: [:send_duplicate]
+      call :add_email_invitees, attributes, include_defaults: [:sendduplicate]
     end
 
 

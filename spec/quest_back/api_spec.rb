@@ -112,7 +112,7 @@ describe QuestBack::Api, type: :request do
         expected_message = expected_default_message.merge(
           quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
           emails: {'array:string' => ['inviso@skalar.no', 'th@skalar.no']},
-          send_duplicate: false,
+          sendduplicate: false,
           order!: QuestBack::Api::ORDER[:add_email_invitees] - [:language_id]
         )
 
@@ -132,7 +132,7 @@ describe QuestBack::Api, type: :request do
         expected_message = expected_default_message.merge(
           quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
           emails: {'array:string' => ['inviso@skalar.no', 'th@skalar.no']},
-          send_duplicate: true,
+          sendduplicate: true,
           order!: QuestBack::Api::ORDER[:add_email_invitees] - [:language_id]
         )
 
@@ -143,7 +143,7 @@ describe QuestBack::Api, type: :request do
             security_lock: 'm0pI8orKJp'
           },
           emails: ['inviso@skalar.no', 'th@skalar.no'],
-          send_duplicate: true
+          sendduplicate: true
         )
       end
 
