@@ -108,7 +108,7 @@ module QuestBack
 
       options_to_response = {
         operation_name: options[:operation_name],
-        result_key_nestings: RESULT_KEY_NESTINGS[operation_name]
+        result_key_nestings: RESULT_KEY_NESTINGS.fetch(operation_name) { fail KeyError, "You must configure RESULT_KEY_NESTINGS for #{operation_name}" }
       }
 
       savon_response = client.call operation_name, build_hash_for_savon_call(attributes, options)
