@@ -170,6 +170,12 @@ module QuestBack
       end
 
       if order = ORDER[options[:operation_name]]
+        unkown_keys = attributes.keys - order
+
+        if unkown_keys.any?
+          fail ArgumentError, "Unkown attributes given to #{options[:operation_name]}: #{unkown_keys.join(', ')}"
+        end
+
         message[:order!] = order & message.keys
       end
 

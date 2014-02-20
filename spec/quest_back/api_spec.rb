@@ -147,6 +147,10 @@ describe QuestBack::Api, type: :request do
         )
       end
 
+      it "fails if you give it keys which are not known" do
+        expect { subject.add_email_invitees(foo: 'bar') }.to raise_error ArgumentError
+      end
+
       it "has expected result" do
         savon.expects(:add_email_invitees).with(message: :any).returns success_fixture_for 'add_email_invitees'
         response = subject.add_email_invitees(
