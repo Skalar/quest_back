@@ -47,6 +47,10 @@ module QuestBack
       'xmlns:enum' => 'http://schemas.microsoft.com/2003/10/Serialization/Enums'
     }
 
+    def self.respondent_data_header_type_for(type)
+      RESPONDENTS_HEADER_TYPE.fetch(type.to_sym) { fail ArgumentError, "#{type.to_s.inspect} is an unkown respondent data header type." }
+    end
+
     # Public: Creates a new API gateway object.
     #
     # Attributes
@@ -130,19 +134,19 @@ module QuestBack
     #         respondent_data_header: [
     #           {
     #             title: 'Epost',
-    #             type: 2,
+    #             type: QuestBack::Api.respondent_data_header_type_for(:text),
     #             is_email_field: true,
     #             is_sms_field: false,
     #           },
     #           {
     #             title: 'Navn',
-    #             type: 2,
+    #             type: QuestBack::Api.respondent_data_header_type_for(:text),
     #             is_email_field: false,
     #             is_sms_field: false,
     #           },
     #           {
     #             title: 'Alder',
-    #             type: 1,
+    #             type: QuestBack::Api.respondent_data_header_type_for(:numeric),
     #             is_email_field: false,
     #             is_sms_field: false,
     #           },

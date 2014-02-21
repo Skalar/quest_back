@@ -220,25 +220,25 @@ describe QuestBack::Api, type: :request do
               respondent_data_header: [
                 {
                   title: 'Epost',
-                  type: 2,
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
                   is_email_field: true,
                   is_sms_field: false,
                 },
                 {
                   title: 'Mobil',
-                  type: 2,
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
                   is_email_field: false,
                   is_sms_field: true,
                 },
                 {
                   title: 'Navn',
-                  type: 2,
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
                   is_email_field: false,
                   is_sms_field: false,
                 },
                 {
                   title: 'Alder',
-                  type: 1,
+                  type: QuestBack::Api.respondent_data_header_type_for(:numeric),
                   is_email_field: false,
                   is_sms_field: false,
                 },
