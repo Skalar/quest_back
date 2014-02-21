@@ -116,6 +116,11 @@ module QuestBack
     #
     # attributes    -   Attributes sent to QuestBack
     #
+    # QuestBack is doing a bit of CSV over XML here? As you need to serialize
+    # respondent_data as a string with a delimiter ala CSV. The order of the
+    # data must match the order of respondent_data_header. I guess simply using XML
+    # and named elements was too easy? :-)
+    #
     # Example
     #
     #   response = api.add_respondents_data(
