@@ -6,7 +6,11 @@ module QuestBack
     DEFAULTS = {
       paging_info: {page_no: 0, page_size: 50},
       quest_filter: '',
-      sendduplicate: false
+      sendduplicate: false,
+      respondents_data: {
+        delimiter: ';',
+        order!: [:respondent_data_header, :respondent_data, :delimiter, :allow_duplicate, :add_as_invitee]
+      }
     }
 
     # The order of the elements in the SOAP body is important for the SOAP API.
@@ -112,7 +116,7 @@ module QuestBack
     end
 
     def add_respondents_data(attributes = {})
-      call :add_respondents_data, attributes
+      call :add_respondents_data, attributes, include_defaults: [:respondents_data]
     end
 
 
@@ -218,22 +222,36 @@ module QuestBack
     def transform_hash_for_quest_back(hash, transform_keys = false)
       Hash[
         hash.map do |key, value|
-          if key != :order!
+          if key == :order!
+            # Key was :order! - it has special meaning: The symbols within it's array is used to
+            # dictate order of elements. Now. If transform_keys is false we are on "root keys". These are
+            # keept as symbols and Savon does it's magic. We'll do nothing. If it is true it means that keys
+            # on this level is put to camelcase and the values in the :order! array must match this.
+            if transform_keys
+              value = value.map { |v| v.to_s.camelcase }
+            end
+          else
             key = transform_keys ? key.to_s.camelcase : key
 
             # Oh my god this is quick, dirty and mega hackish!
+            # Type element in the RespondentDataHeader must be in namespace enum.
             key = "enum:Type" if key == "Type"
 
+            # In some cases we would like to transform values as well as the key
             value = case value
             when Hash
+              # Keep on transformin recursively..
               transform_hash_for_quest_back value, true
             when Array
               if value.all? { |v| v.is_a? String }
+                # Put it in a structure QuestBack likes..
                 {'array:string' => value}
               elsif value.all? { |v| v.is_a? Hash }
+                # Keep on transformin recursively..
                 value.map { |hash| transform_hash_for_quest_back(hash, true) }
               end
             else
+              # We don't know anything better - just let value fall through
               value
             end
           end

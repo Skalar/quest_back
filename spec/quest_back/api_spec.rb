@@ -205,7 +205,8 @@ describe QuestBack::Api, type: :request do
             'RespondentData' => {'array:string' => ['th@skalar.no;404 40 404;Thorbjorn;32']},
             'Delimiter' => ';',
             'AllowDuplicate' => true,
-            'AddAsInvitee' => true
+            'AddAsInvitee' => true,
+            order!: ["RespondentDataHeader", "RespondentData", "Delimiter", "AllowDuplicate", "AddAsInvitee"]
           } ,
           order!: QuestBack::Api::ORDER[:add_respondents_data] - [:language_id]
         )
@@ -244,7 +245,6 @@ describe QuestBack::Api, type: :request do
               ]
             },
             respondent_data: ['th@skalar.no;404 40 404;Thorbjorn;32'],
-            delimiter: ';',
             allow_duplicate: true,
             add_as_invitee: true
           }
