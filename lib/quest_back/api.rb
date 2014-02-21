@@ -235,7 +235,7 @@ module QuestBack
         unkown_keys = attributes.keys - order
 
         if unkown_keys.any?
-          fail ArgumentError, "Unkown attributes given to #{options[:operation_name]}: #{unkown_keys.join(', ')}. Attributes' order needs to be configured in #{self.class.name}::ORDER."
+          fail ArgumentError, "Unkown attribute(s) given to #{options[:operation_name]}: #{unkown_keys.join(', ')}. Attributes' order is defined in #{self.class.name}::ORDER, but you sent in something we do not have."
         end
 
         message[:order!] = order & message.keys
