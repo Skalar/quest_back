@@ -8,6 +8,7 @@ This gem is not complete and may lack many functions provided by QuestBack.
 Please feel free to contribute and make pull requests.
 
 It is also very simplistic, only using simple hashes for both sending in arguments to the API and returning responses.
+The hash you send as argument to operation methods is more or less sent on to QuestBack.
 Maybe this will change in the future with real objects sent in to the API.
 
 
@@ -68,6 +69,44 @@ response = api.add_email_invitees(
 
 response.result
 => "Added 2 invitations to QuestId:4567668"
+
+
+# Add respondent data
+response = api.add_respondents_data(
+  quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+  respondents_data: {
+    respondent_data_header: {
+      respondent_data_header: [
+        {
+          title: 'Epost',
+          type: 2,
+          is_email_field: true,
+          is_sms_field: false,
+        },
+        {
+          title: 'Navn',
+          type: 2,
+          is_email_field: false,
+          is_sms_field: false,
+        },
+        {
+          title: 'Alder',
+          type: 1,
+          is_email_field: false,
+          is_sms_field: false,
+        },
+      ]
+    },
+    respondent_data: ['th@skalar.no;Thorbjorn;32'],
+    allow_duplicate: true,
+    add_as_invitee: true
+  }
+)
+
+response.result
+=> "Added 1 respondent data to QuestId :4567668"
+
+
 ```
 
 

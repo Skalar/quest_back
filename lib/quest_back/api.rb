@@ -101,10 +101,7 @@ module QuestBack
     # Example
     #
     #   response = api.add_email_invitees(
-    #     quest_info: {
-    #       quest_id: 4567668,
-    #       security_lock: 'm0pI8orKJp'
-    #     },
+    #     quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
     #     emails: ['inviso@skalar.no', 'th@skalar.no'],
     #     sendduplicate: true, # or false as default
     #     language_id: 123, # optional
@@ -115,6 +112,46 @@ module QuestBack
       call :add_email_invitees, attributes, include_defaults: [:sendduplicate]
     end
 
+    # Public: Add respondent data to a quest - optionally send as invitee as well.
+    #
+    # attributes    -   Attributes sent to QuestBack
+    #
+    # Example
+    #
+    #   response = api.add_respondents_data(
+    #     quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+    #     respondents_data: {
+    #       respondent_data_header: {
+    #         respondent_data_header: [
+    #           {
+    #             title: 'Epost',
+    #             type: 2,
+    #             is_email_field: true,
+    #             is_sms_field: false,
+    #           },
+    #           {
+    #             title: 'Navn',
+    #             type: 2,
+    #             is_email_field: false,
+    #             is_sms_field: false,
+    #           },
+    #           {
+    #             title: 'Alder',
+    #             type: 1,
+    #             is_email_field: false,
+    #             is_sms_field: false,
+    #           },
+    #         ]
+    #       },
+    #       respondent_data: ['th@skalar.no;Thorbjorn;32'], # According to QuestBack's doc you can only do one here
+    #       allow_duplicate: true,
+    #       add_as_invitee: true
+    #     }
+    #   )
+    #
+    # You may override respondent_data's delimiter in string too.
+    #
+    # Returns QuestBack::Response
     def add_respondents_data(attributes = {})
       call :add_respondents_data, attributes, include_defaults: [:respondents_data]
     end
