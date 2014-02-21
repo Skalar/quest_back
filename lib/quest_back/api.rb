@@ -269,9 +269,9 @@ module QuestBack
       Hash[
         hash.map do |key, value|
           if key == :order!
-            # Key was :order! - it has special meaning: The symbols within it's array is used to
-            # dictate order of elements. Now. If transform_keys is false we are on "root keys". These are
-            # keept as symbols and Savon does it's magic. We'll do nothing. If it is true it means that keys
+            # Key was :order! - it has special meaning: The symbols within it's array are used to
+            # dictate order of elements. If transform_keys is false we are on "root keys". These are
+            # keept as symbols and Savon does it's magic and we'll do nothing. If it is true it means that keys
             # on this level is put to camelcase and the values in the :order! array must match this.
             if transform_keys
               value = value.map { |v| v.to_s.camelcase }
@@ -286,14 +286,14 @@ module QuestBack
             # In some cases we would like to transform values as well as the key
             value = case value
             when Hash
-              # Keep on transformin recursively..
+              # Keep on transforming recursively..
               transform_hash_for_quest_back value, true
             when Array
               if value.all? { |v| v.is_a? String }
                 # Put it in a structure QuestBack likes..
                 {'array:string' => value}
               elsif value.all? { |v| v.is_a? Hash }
-                # Keep on transformin recursively..
+                # Keep on transforming recursively..
                 value.map { |hash| transform_hash_for_quest_back(hash, true) }
               end
             else
