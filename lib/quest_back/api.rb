@@ -39,7 +39,8 @@ module QuestBack
     }
 
     NAMESPACES = {
-      'xmlns:array' => 'http://schemas.microsoft.com/2003/10/Serialization/Arrays'
+      'xmlns:array' => 'http://schemas.microsoft.com/2003/10/Serialization/Arrays',
+      'xmlns:enum' => 'http://schemas.microsoft.com/2003/10/Serialization/Enums'
     }
 
     # Public: Creates a new API gateway object.
