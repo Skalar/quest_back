@@ -105,8 +105,35 @@ response = api.add_respondents_data(
 
 response.result
 => "Added 1 respondent data to QuestId :4567668"
+```
 
+### Debug XML without making a request
 
+If you ever need to see XML generated without sending the request it can be done by doing:
+
+```ruby
+QuestBack.debug!
+QuestBack::Api.new.test_connection
+
+  DEBUG -- : HTTPI GET request to integration.questback.com (net_http)
+   INFO -- : !!!!!!!!!
+   INFO -- : !!! SOAP request hijacked by QuestBack::DebugObserver.
+   INFO -- : !!!!!!!!!
+  DEBUG -- :
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="https://integration.questback.com/2011/03" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:array="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:enum="http://schemas.microsoft.com/2003/10/Serialization/Enums">
+    <env:Body>
+      <wsdl:TestConnection>
+        <wsdl:userInfo>
+          <wsdl:Username>inviso@skalar.no</wsdl:Username>
+          <wsdl:Password>xxxxx</wsdl:Password>
+        </wsdl:userInfo>
+      </wsdl:TestConnection>
+    </env:Body>
+  </env:Envelope>
+
+QuestBack.remove_debug! # Activates real requests again
 ```
 
 

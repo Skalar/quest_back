@@ -37,14 +37,14 @@ module QuestBack
   # Injects a debug observer which hijacks requests so we don't send anything.
   # We'll pretty print the SOAP body for inspection.
   def self.debug!
-    remove_debugger!
+    remove_debug!
     Savon.observers << DebugObserver.new
   end
 
   # :nodoc:
   #
   # Removes any debug observers.
-  def self.remove_debugger!
+  def self.remove_debug!
     Savon.observers.delete_if { |observer| observer.is_a? DebugObserver }
   end
 
