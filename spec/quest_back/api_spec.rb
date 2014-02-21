@@ -178,35 +178,76 @@ describe QuestBack::Api, type: :request do
               'RespondentDataHeader' => [
                 {
                   'Title' => 'Epost',
-                  'Type' => 2,
+                  'enum:Type' => 2,
                   'IsEmailField' => true,
                   'IsSmsField' => false
                 },
                 {
+                  'Title' => 'Mobil',
+                  'enum:Type' => 2,
+                  'IsEmailField' => false,
+                  'IsSmsField' => true
+                },
+                {
                   'Title' => 'Navn',
-                  'Type' => 2,
+                  'enum:Type' => 2,
                   'IsEmailField' => false,
                   'IsSmsField' => false
                 },
                 {
                   'Title' => 'Alder',
-                  'Type' => 1,
+                  'enum:Type' => 1,
                   'IsEmailField' => false,
                   'IsSmsField' => false
                 }
               ]
             },
-            'RespondentData' => ['th@skalar.no;Thorbjorn;32'],
-            'Deliminator' => ';',
+            'RespondentData' => {'array:string' => ['th@skalar.no;404 40 404;Thorbjorn;32']},
+            'Delimiter' => ';',
             'AllowDuplicate' => true,
             'AddAsInvitee' => true
-          },
+          } ,
           order!: QuestBack::Api::ORDER[:add_respondents_data] - [:language_id]
         )
 
 
         savon.expects(:add_respondents_data).with(message: expected_message).returns success_fixture_for 'add_respondents_data'
         response = subject.add_respondents_data(
+          quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+          respondents_data: {
+            respondent_data_header: {
+              respondent_data_header: [
+                {
+                  title: 'Epost',
+                  type: 2,
+                  is_email_field: true,
+                  is_sms_field: false,
+                },
+                {
+                  title: 'Mobil',
+                  type: 2,
+                  is_email_field: false,
+                  is_sms_field: true,
+                },
+                {
+                  title: 'Navn',
+                  type: 2,
+                  is_email_field: false,
+                  is_sms_field: false,
+                },
+                {
+                  title: 'Alder',
+                  type: 1,
+                  is_email_field: false,
+                  is_sms_field: false,
+                },
+              ]
+            },
+            respondent_data: ['th@skalar.no;404 40 404;Thorbjorn;32'],
+            delimiter: ';',
+            allow_duplicate: true,
+            add_as_invitee: true
+          }
         )
 
         expect(response).to be_successful

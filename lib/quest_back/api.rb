@@ -218,14 +218,24 @@ module QuestBack
     def transform_hash_for_quest_back(hash, transform_keys = false)
       Hash[
         hash.map do |key, value|
-          key = transform_keys ? key.to_s.camelcase : key
-          value = case value
-          when Hash
-            transform_hash_for_quest_back value, true
-          when Array
-            value.all? { |v| v.is_a? String } ? {'array:string' => value} : value
-          else
-            value
+          if key != :order!
+            key = transform_keys ? key.to_s.camelcase : key
+
+            # Oh my god this is quick, dirty and mega hackish!
+            key = "enum:Type" if key == "Type"
+
+            value = case value
+            when Hash
+              transform_hash_for_quest_back value, true
+            when Array
+              if value.all? { |v| v.is_a? String }
+                {'array:string' => value}
+              elsif value.all? { |v| v.is_a? Hash }
+                value.map { |hash| transform_hash_for_quest_back(hash, true) }
+              end
+            else
+              value
+            end
           end
 
           [key, value]
