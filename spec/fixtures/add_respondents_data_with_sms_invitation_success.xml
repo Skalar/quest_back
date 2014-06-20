@@ -1,0 +1,7 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <AddRespondentsDataWithSmsInvitationResponse xmlns="https://integration.questback.com/2011/03">
+         <AddRespondentsDataWithSmsInvitationResult>Sms message created successfully</AddRespondentsDataWithSmsInvitationResult>
+      </AddRespondentsDataWithSmsInvitationResponse>
+   </s:Body>
+</s:Envelope>

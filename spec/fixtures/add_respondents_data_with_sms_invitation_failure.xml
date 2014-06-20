@@ -1,0 +1,8 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <s:Fault>
+      <faultcode>s:Client</faultcode>
+      <faultstring xml:lang="nb-NO">Invalid input: Failed to parse sms number! Number:aaaa</faultstring>
+    </s:Fault>
+  </s:Body>
+</s:Envelope>
