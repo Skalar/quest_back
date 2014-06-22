@@ -81,19 +81,19 @@ response = api.add_respondents_data(
           title: 'Epost',
           type: QuestBack::Api.respondent_data_header_type_for(:text),
           is_email_field: true,
-          is_sms_field: false,
+          is_sms_field: false
         },
         {
           title: 'Navn',
           type: QuestBack::Api.respondent_data_header_type_for(:text),
           is_email_field: false,
-          is_sms_field: false,
+          is_sms_field: false
         },
         {
           title: 'Alder',
           type: QuestBack::Api.respondent_data_header_type_for(:numeric),
           is_email_field: false,
-          is_sms_field: false,
+          is_sms_field: false
         },
       ]
     },
@@ -105,6 +105,33 @@ response = api.add_respondents_data(
 
 response.result
 => "Added 1 respondent data to QuestId :4567668"
+
+
+# Add respondent data with sms invitation
+response = api.add_respondents_data_with_sms_invitation(
+  quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+  respondents_data: {
+    respondent_data_header: {
+      respondent_data_header: [
+        {
+          title: 'Phone',
+          type: QuestBack::Api.respondent_data_header_type_for(:text),
+          is_email_field: false,
+          is_sms_field: true
+        }
+      ]
+    },
+    respondent_data: ['4711223344'],
+    allow_duplicate: true,
+    add_as_invitee: true
+  },
+  sms_from_number: 11111111,
+  sms_from_text: 'Inviso AS',
+  sms_message: 'Hello - please join our quest!'
+)
+
+response.result
+=> "Sms message created successfully"
 ```
 
 ### Debug XML without making a request

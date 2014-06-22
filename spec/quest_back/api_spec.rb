@@ -253,5 +253,86 @@ describe QuestBack::Api, type: :request do
         expect(response).to be_successful
       end
     end
+
+    describe "#add_respondents_data_with_sms_invitation" do
+      it "makes call with expected arguments" do
+        expected_message = expected_default_message.merge(
+          quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
+          respondents_data: {
+            'RespondentDataHeader' => {
+              'RespondentDataHeader' => [
+                {
+                  'Title' => 'Epost',
+                  'enum:Type' => 2,
+                  'IsEmailField' => true,
+                  'IsSmsField' => false
+                },
+                {
+                  'Title' => 'Mobil',
+                  'enum:Type' => 2,
+                  'IsEmailField' => false,
+                  'IsSmsField' => true
+                }
+              ]
+            },
+            'RespondentData' => {'array:string' => ['th@skalar.no;404 40 404']},
+            'Delimiter' => ';',
+            'AllowDuplicate' => true,
+            'AddAsInvitee' => true,
+            order!: ["RespondentDataHeader", "RespondentData", "Delimiter", "AllowDuplicate", "AddAsInvitee"]
+          },
+          sms_from_number: 11111111,
+          sms_from_text: 'Inviso AS',
+          sms_message: 'Hello - please join our quest!',
+          order!: QuestBack::Api::ORDER[:add_respondents_data_with_sms_invitation] - [:language_id]
+        )
+
+
+        savon.expects(:add_respondents_data_with_sms_invitation)
+          .with(message: expected_message)
+          .returns success_fixture_for 'add_respondents_data_with_sms_invitation'
+
+
+        response = subject.add_respondents_data_with_sms_invitation(
+          quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+          respondents_data: {
+            respondent_data_header: {
+              respondent_data_header: [
+                {
+                  title: 'Epost',
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
+                  is_email_field: true,
+                  is_sms_field: false,
+                },
+                {
+                  title: 'Mobil',
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
+                  is_email_field: false,
+                  is_sms_field: true,
+                }
+              ]
+            },
+            respondent_data: ['th@skalar.no;404 40 404'],
+            allow_duplicate: true,
+            add_as_invitee: true
+          },
+          sms_from_number: 11111111,
+          sms_from_text: 'Inviso AS',
+          sms_message: 'Hello - please join our quest!'
+        )
+
+        expect(response).to be_successful
+      end
+
+      it "fails with soap error when phone number isn't parsable" do
+        savon.expects(:add_respondents_data_with_sms_invitation)
+          .with(message: :any)
+          .returns failure_fixture_for 'add_respondents_data_with_sms_invitation'
+
+        expect {
+          subject.add_respondents_data_with_sms_invitation
+        }.to raise_error Savon::SOAPFault
+      end
+    end
   end
 end

@@ -19,7 +19,11 @@ module QuestBack
     ORDER = {
       get_quests: [:user_info, :paging_info, :quest_filter],
       add_email_invitees: [:user_info, :quest_info, :emails, :sendduplicate, :language_id],
-      add_respondents_data: [:user_info, :quest_info, :respondents_data, :language_id]
+      add_respondents_data: [:user_info, :quest_info, :respondents_data, :language_id],
+      add_respondents_data_with_sms_invitation: [
+        :user_info, :quest_info, :respondents_data, :language_id,
+        :sms_from_number, :sms_from_text, :sms_message
+      ]
     }
 
     # In order to provide a simple response.result and response.results interface
@@ -34,7 +38,8 @@ module QuestBack
       get_quests: [:quests, :quest],
       get_language_list: [:language],
       add_email_invitees: [],
-      add_respondents_data: []
+      add_respondents_data: [],
+      add_respondents_data_with_sms_invitation: []
     }
 
     RESPONDENTS_HEADER_TYPE = {
@@ -48,7 +53,9 @@ module QuestBack
     }
 
     def self.respondent_data_header_type_for(type)
-      RESPONDENTS_HEADER_TYPE.fetch(type.to_sym) { fail ArgumentError, "#{type.to_s.inspect} is an unkown respondent data header type." }
+      RESPONDENTS_HEADER_TYPE.fetch(type.to_sym) do
+        fail ArgumentError, "#{type.to_s.inspect} is an unkown respondent data header type."
+      end
     end
 
     # Public: Creates a new API gateway object.
@@ -163,6 +170,51 @@ module QuestBack
     # Returns QuestBack::Response
     def add_respondents_data(attributes = {})
       call :add_respondents_data, attributes, include_defaults: [:respondents_data]
+    end
+
+    # Public: Add respondent data to a quest with SMS invitation
+    #
+    # attributes    -   Attributes sent to QuestBack
+    #
+    #
+    # Example
+    #
+    #   response = api.add_respondents_data_with_sms_invitation(
+    #     quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+    #     respondents_data: {
+    #       respondent_data_header: {
+    #         respondent_data_header: [
+    #           {
+    #             title: 'Epost',
+    #             type: QuestBack::Api.respondent_data_header_type_for(:text),
+    #             is_email_field: true,
+    #             is_sms_field: false,
+    #           },
+    #           {
+    #             title: 'Phone',
+    #             type: QuestBack::Api.respondent_data_header_type_for(:text),
+    #             is_email_field: false,
+    #             is_sms_field: true,
+    #           }
+    #         ]
+    #       },
+    #       # According to QuestBack's doc you can only do one respondent data,
+    #       # even though it for sure is an array. Phone numbers must be given
+    #       # on with country code first.
+    #       respondent_data: ['th@skalar.no;4711223344'],
+    #       allow_duplicate: true,
+    #       add_as_invitee: true
+    #     },
+    #     sms_from_number: 11111111,
+    #     sms_from_text: 'Inviso AS',
+    #     sms_message: 'Hello - please join our quest!'
+    #   )
+    #
+    # You may override respondent_data's delimiter in string too.
+    #
+    # Returns QuestBack::Response
+    def add_respondents_data_with_sms_invitation(attributes = {})
+      call :add_respondents_data_with_sms_invitation, attributes, include_defaults: [:respondents_data]
     end
 
 
