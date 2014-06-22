@@ -81,19 +81,19 @@ response = api.add_respondents_data(
           title: 'Epost',
           type: QuestBack::Api.respondent_data_header_type_for(:text),
           is_email_field: true,
-          is_sms_field: false,
+          is_sms_field: false
         },
         {
           title: 'Navn',
           type: QuestBack::Api.respondent_data_header_type_for(:text),
           is_email_field: false,
-          is_sms_field: false,
+          is_sms_field: false
         },
         {
           title: 'Alder',
           type: QuestBack::Api.respondent_data_header_type_for(:numeric),
           is_email_field: false,
-          is_sms_field: false,
+          is_sms_field: false
         },
       ]
     },
