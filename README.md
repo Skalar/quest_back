@@ -1,6 +1,6 @@
 # QuestBack
 
-Simply Ruby client for QuestBack's SOAP API.
+Simple Ruby client for QuestBack's SOAP API.
 
 ### WARNING
 
@@ -8,8 +8,8 @@ This gem is not complete and may lack many functions provided by QuestBack.
 Please feel free to contribute and make pull requests.
 
 It is also very simplistic, only using simple hashes for both sending in arguments to the API and returning responses.
-The hash you send as argument to operation methods is more or less sent on to QuestBack.
-Maybe this will change in the future with real objects sent in to the API.
+The hash you send as argument to an operation methods is more or less passed on directly to QuestBack. We do some
+transformation of the has to match the expectations of QuestBack's API.
 
 
 
@@ -30,17 +30,25 @@ Or install it yourself as:
 
 ## Usage
 
-### Get access - test client in console
+### Getting access to API
 
 1. Go to https://response.questback.com/soapdocs/integration/ and request white listing of the IP you will make requests from.
 2. Sign in to QuestBack. Go to your account's page and fill in "Integration username and password".
    If you have no fields under Integration Information you have to contact QuestBack to get access.
-3. Copy config.example.yml to config.yml and insert your username and password.
-4. `QuestBack.conf!` to load config.yml as default config.
-5. `QuestBack::Client.new.test_connection` to make a test connection API call. On successful connection this returns string with current namespace of integration library.
 
+### Create an API client
 
-### Example of usage
+```ruby
+api = QuestBack::Api.new(
+  config: QuestBack::Configuration.new(username: "username", password: "password")
+)
+
+response = api.test_connection
+response.result
+=> "Connection sucessful. you are connected to namespace: https://integration.questback.com/2011/03"
+```
+
+### Examples
 
 ```ruby
 # Read quests
@@ -172,3 +180,12 @@ QuestBack.remove_debug! # Activates real requests again
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+#### Test client in console
+
+After cloning the repository you may do this to make it a bit more convenient working
+with the code in your console while developing.
+
+1. Copy config.example.yml to config.yml and insert your username and password.
+2. Load console `bundle console` and do `QuestBack.conf!` to load config.yml as default config.
+3. `QuestBack::Client.new.test_connection` to make a test connection API call. On successful connection this returns string with current namespace of integration library.
