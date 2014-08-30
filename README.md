@@ -2,6 +2,8 @@
 
 Simple Ruby client for QuestBack's SOAP API.
 
+[![Build Status](https://travis-ci.org/Skalar/quest_back.svg?branch=master)](https://travis-ci.org/Skalar/quest_back)
+
 ### WARNING
 
 This gem is not complete and may lack many functions provided by QuestBack.
