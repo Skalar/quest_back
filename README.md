@@ -2,7 +2,7 @@
 
 Simple Ruby client for QuestBack's SOAP API.
 
-[ ![Codeship Status for matsve/quest_back](https://codeship.com/projects/74070280-df99-0133-54e5-460ef9277ccd/status?branch=master)](https://codeship.com/projects/145033)
+[![Build Status](https://travis-ci.org/Skalar/quest_back.svg?branch=master)](https://travis-ci.org/Skalar/quest_back)
 
 ### WARNING
 
