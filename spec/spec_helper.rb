@@ -25,8 +25,6 @@ end
 
 
 RSpec.configure do |c|
-  c.treat_symbols_as_metadata_keys_with_true_values = true
-
   # Mock savon request tests
   c.include Savon::SpecHelper, type: :request
   c.include RequestHelpers, type: :request
