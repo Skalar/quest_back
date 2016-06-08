@@ -28,7 +28,7 @@ describe QuestBack::Api, type: :request do
     it "sets proxy building client" do
       config.http_proxy = 'http://127.0.0.1/'
 
-      Savon::Client.should_receive(:new).
+      expect(Savon::Client).to receive(:new).
         with(hash_including(proxy: 'http://127.0.0.1/')).
         and_return :client
 

@@ -16,7 +16,7 @@ describe QuestBack::Response, type: :request do
 
   describe "#result" do
     context "singular result" do
-      before { http.stub(:body).and_return success_fixture_for('get_quests') }
+      before { allow(http).to receive(:body).and_return success_fixture_for('get_quests') }
 
       it "returns the result of it's body" do
         expect(subject.result).to eq savon_response.body[:get_quests_response][:get_quests_result][:quests][:quest]
@@ -24,7 +24,7 @@ describe QuestBack::Response, type: :request do
     end
 
     context "multiple result" do
-      before { http.stub(:body).and_return success_fixture_for('get_quests_multiple_response') }
+      before { allow(http).to receive(:body).and_return success_fixture_for('get_quests_multiple_response') }
 
       it "fails" do
         expect { subject.result }.to raise_error QuestBack::Error::MultipleResultsFound
@@ -34,7 +34,7 @@ describe QuestBack::Response, type: :request do
 
   describe "#results" do
     context "singular result" do
-      before { http.stub(:body).and_return success_fixture_for('get_quests') }
+      before { allow(http).to receive(:body).and_return success_fixture_for('get_quests') }
 
       it "returns the result of it's body wrapped in an array" do
         expect(subject.results).to eq Array.wrap(savon_response.body[:get_quests_response][:get_quests_result][:quests][:quest])
@@ -42,7 +42,7 @@ describe QuestBack::Response, type: :request do
     end
 
     context "multiple result" do
-      before { http.stub(:body).and_return success_fixture_for('get_quests_multiple_response') }
+      before { allow(http).to receive(:body).and_return success_fixture_for('get_quests_multiple_response') }
 
       it "returns the result" do
         expect(subject.results).to eq savon_response.body[:get_quests_response][:get_quests_result][:quests][:quest]
