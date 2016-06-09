@@ -1,4 +1,7 @@
-## 0.0.2 (unreleased)
+## 0.0.3
+* Support for operation `add_respondents_data_without_email_invitation` (by matsve)
+
+## 0.0.2
 * Support for operation `add_respondents_data_with_sms_invitation`.
 
 ## 0.0.1
