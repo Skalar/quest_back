@@ -254,6 +254,90 @@ describe QuestBack::Api, type: :request do
       end
     end
 
+    describe "#add_respondents_data_without_email_invitation" do
+      it "makes call with expected arguments" do
+        expected_message = expected_default_message.merge(
+          quest_info: {'QuestId' => 4567668, 'SecurityLock' => 'm0pI8orKJp'},
+          respondents_data: {
+            'RespondentDataHeader' => {
+              'RespondentDataHeader' => [
+                {
+                  'Title' => 'Epost',
+                  'enum:Type' => 2,
+                  'IsEmailField' => true,
+                  'IsSmsField' => false
+                },
+                {
+                  'Title' => 'Mobil',
+                  'enum:Type' => 2,
+                  'IsEmailField' => false,
+                  'IsSmsField' => true
+                },
+                {
+                  'Title' => 'Navn',
+                  'enum:Type' => 2,
+                  'IsEmailField' => false,
+                  'IsSmsField' => false
+                },
+                {
+                  'Title' => 'Alder',
+                  'enum:Type' => 1,
+                  'IsEmailField' => false,
+                  'IsSmsField' => false
+                }
+              ]
+            },
+            'RespondentData' => {'array:string' => ['th@skalar.no;404 40 404;Thorbjorn;32']},
+            'Delimiter' => ';',
+            'AllowDuplicate' => true,
+            'AddAsInvitee' => true,
+            order!: ["RespondentDataHeader", "RespondentData", "Delimiter", "AllowDuplicate", "AddAsInvitee"]
+          },
+          order!: QuestBack::Api::ORDER[:add_respondents_data_without_email_invitation] - [:language_id]
+        )
+
+        savon.expects(:add_respondents_data_without_email_invitation).with(message: expected_message).returns success_fixture_for 'add_respondents_data_without_email_invitation'
+        response = subject.add_respondents_data_without_email_invitation(
+          quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+          respondents_data: {
+            respondent_data_header: {
+              respondent_data_header: [
+                {
+                  title: 'Epost',
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
+                  is_email_field: true,
+                  is_sms_field: false,
+                },
+                {
+                  title: 'Mobil',
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
+                  is_email_field: false,
+                  is_sms_field: true,
+                },
+                {
+                  title: 'Navn',
+                  type: QuestBack::Api.respondent_data_header_type_for(:text),
+                  is_email_field: false,
+                  is_sms_field: false,
+                },
+                {
+                  title: 'Alder',
+                  type: QuestBack::Api.respondent_data_header_type_for(:numeric),
+                  is_email_field: false,
+                  is_sms_field: false,
+                },
+              ]
+            },
+            respondent_data: ['th@skalar.no;404 40 404;Thorbjorn;32'],
+            allow_duplicate: true,
+            add_as_invitee: true
+          }
+        )
+
+        expect(response).to be_successful
+      end
+    end
+
     describe "#add_respondents_data_with_sms_invitation" do
       it "makes call with expected arguments" do
         expected_message = expected_default_message.merge(

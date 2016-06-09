@@ -20,6 +20,7 @@ module QuestBack
       get_quests: [:user_info, :paging_info, :quest_filter],
       add_email_invitees: [:user_info, :quest_info, :emails, :sendduplicate, :language_id],
       add_respondents_data: [:user_info, :quest_info, :respondents_data, :language_id],
+      add_respondents_data_without_email_invitation: [:user_info, :quest_info, :respondents_data, :language_id],
       add_respondents_data_with_sms_invitation: [
         :user_info, :quest_info, :respondents_data, :language_id,
         :sms_from_number, :sms_from_text, :sms_message
@@ -39,6 +40,7 @@ module QuestBack
       get_language_list: [:language],
       add_email_invitees: [],
       add_respondents_data: [],
+      add_respondents_data_without_email_invitation: [],
       add_respondents_data_with_sms_invitation: []
     }
 
@@ -170,6 +172,56 @@ module QuestBack
     # Returns QuestBack::Response
     def add_respondents_data(attributes = {})
       call :add_respondents_data, attributes, include_defaults: [:respondents_data]
+    end
+
+    # Public: Add respondent data to a quest - optionally send as invitee as well.
+    #         This will not send an email invitation through Questback's platform
+    #
+    # attributes    -   Attributes sent to QuestBack
+    #
+    # QuestBack is doing a bit of CSV over XML here? As you need to serialize
+    # respondent_data as a string with a delimiter ala CSV. The order of the
+    # data must match the order of respondent_data_header. I guess simply using XML
+    # and named elements was too easy? :-)
+    #
+    # Example
+    #
+    #   response = api.add_respondents_data_without_email_invitation(
+    #     quest_info: {quest_id: 4567668, security_lock: 'm0pI8orKJp'},
+    #     respondents_data: {
+    #       respondent_data_header: {
+    #         respondent_data_header: [
+    #           {
+    #             title: 'Epost',
+    #             type: QuestBack::Api.respondent_data_header_type_for(:text),
+    #             is_email_field: true,
+    #             is_sms_field: false,
+    #           },
+    #           {
+    #             title: 'Navn',
+    #             type: QuestBack::Api.respondent_data_header_type_for(:text),
+    #             is_email_field: false,
+    #             is_sms_field: false,
+    #           },
+    #           {
+    #             title: 'Alder',
+    #             type: QuestBack::Api.respondent_data_header_type_for(:numeric),
+    #             is_email_field: false,
+    #             is_sms_field: false,
+    #           },
+    #         ]
+    #       },
+    #       respondent_data: ['th@skalar.no;Thorbjorn;32'], # According to QuestBack's doc you can only do one here
+    #       allow_duplicate: true,
+    #       add_as_invitee: true
+    #     }
+    #   )
+    #
+    # You may override respondent_data's delimiter in string too.
+    #
+    # Returns QuestBack::Response
+    def add_respondents_data_without_email_invitation(attributes = {})
+      call :add_respondents_data_without_email_invitation, attributes, include_defaults: [:respondents_data]
     end
 
     # Public: Add respondent data to a quest with SMS invitation

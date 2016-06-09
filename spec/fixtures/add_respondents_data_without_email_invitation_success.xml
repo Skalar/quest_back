@@ -1,0 +1,7 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <AddRespondentsDataWithoutEmailInvitationResponse xmlns="https://integration.questback.com/2011/03">
+      <AddRespondentsDataWithoutEmailInvitationResult>https://response.questback.com/isa/qbv.dll/SQ?id=4806631-329832123|218186238-SvyvBLDH</AddRespondentsDataWithoutEmailInvitationResult>
+    </AddRespondentsDataWithoutEmailInvitationResponse>
+  </s:Body>
+</s:Envelope>
